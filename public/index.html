@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GuardX — Shield AI Agent & Security Dashboard</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <i class="fa-solid fa-shield-halved logo-icon"></i>
+        </div>
+        <div class="brand-text">
+          <h1>GuardX</h1>
+          <span>Shield AI Agent v1.0</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="dashboard">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-tab="scanner">
+          <i class="fa-solid fa-magnifying-glass-chart"></i>
+          <span>Scam & Stuck Scanner</span>
+        </button>
+        <button class="nav-item" data-tab="auditor">
+          <i class="fa-solid fa-file-shield"></i>
+          <span>Smart Contract Audit</span>
+        </button>
+        <button class="nav-item" data-tab="gas">
+          <i class="fa-solid fa-gas-pump"></i>
+          <span>Gas Optimizer</span>
+        </button>
+        <button class="nav-item" data-tab="alerts">
+          <i class="fa-solid fa-bell"></i>
+          <span>Real-time Alerts</span>
+        </button>
+        <button class="nav-item" data-tab="chatbot">
+          <i class="fa-solid fa-user-astronaut"></i>
+          <span>Shield AI Agent</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="chain-selector-wrapper">
+          <label for="global-chain-select"><i class="fa-solid fa-network-wired"></i> Network</label>
+          <select id="global-chain-select" class="chain-dropdown">
+            <option value="ethereum">Ethereum Mainnet</option>
+            <option value="solana">Solana</option>
+            <option value="bsc">BNB Smart Chain</option>
+            <option value="polygon">Polygon PoS</option>
+          </select>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- App Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <h2 id="page-title">Dashboard Overview</h2>
+          <p id="page-description">Cybersecurity status and real-time blockchain analytics.</p>
+        </div>
+        <div class="header-right">
+          <div class="status-indicator">
+            <span class="pulse-dot green"></span>
+            <span class="status-text">API Online (8ms)</span>
+          </div>
+          <div class="user-profile">
+            <i class="fa-solid fa-user-shield"></i>
+            <span>Admin</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="view-viewport">
+        
+        <!-- DASHBOARD TAB -->
+        <section id="tab-dashboard" class="tab-view active">
+          <!-- Stat Cards -->
+          <div class="grid-stats">
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fa-solid fa-gauge-high"></i></div>
+              <div class="stat-info">
+                <h3>99.9%</h3>
+                <p>Threat Detection Rate</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon red"><i class="fa-solid fa-bug"></i></div>
+              <div class="stat-info">
+                <h3>2,481</h3>
+                <p>Malicious Contracts Blocked</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon teal"><i class="fa-solid fa-tower-broadcast"></i></div>
+              <div class="stat-info">
+                <h3 id="dash-active-alerts-count">0</h3>
+                <p>Active Watch Subscriptions</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon purple"><i class="fa-solid fa-bolt"></i></div>
+              <div class="stat-info">
+                <h3>60 req/m</h3>
+                <p>Public API Rate Limit</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Dashboard Split Layout -->
+          <div class="dashboard-split">
+            <div class="split-left">
+              <div class="card glass">
+                <div class="card-header">
+                  <h3><i class="fa-solid fa-shield-halved"></i> GuardX Quick Analysis</h3>
+                </div>
+                <div class="card-body">
+                  <p class="subtitle">Quickly diagnose any transaction or smart contract address across EVM chains or Solana.</p>
+                  
+                  <div class="search-box">
+                    <input type="text" id="quick-scan-input" placeholder="Enter Transaction Hash or Address (e.g. 0xscam, 0xtrusted)...">
+                    <button id="quick-scan-btn"><i class="fa-solid fa-bolt"></i> Scan</button>
+                  </div>
+                  <div class="demo-chips">
+                    <span>Quick Demo:</span>
+                    <button class="chip-btn" data-input="0xscam">🔴 0xscam (Phishing)</button>
+                    <button class="chip-btn" data-input="0xstuck">🟡 0xstuck (Low Gas)</button>
+                    <button class="chip-btn" data-input="0xtrusted">🟢 0xtrusted (Uniswap)</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live Gas Ticker -->
+              <div class="card glass">
+                <div class="card-header">
+                  <h3><i class="fa-solid fa-gas-pump"></i> Network Gas Tracker</h3>
+                  <span class="refresh-badge" id="gas-refresh-label">Updates in 30s</span>
+                </div>
+                <div class="card-body">
+                  <div class="gas-flex-grid" id="dash-gas-grid">
+                    <!-- Dynamic gas cards will inject here -->
+                    <div class="gas-loader"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading Gas Rates...</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="split-right">
+              <!-- Security Feeds -->
+              <div class="card glass security-feed">
+                <div class="card-header">
+                  <h3><i class="fa-solid fa-rss"></i> Live Security Alerts</h3>
+                </div>
+                <div class="card-body list-scroll">
+                  <div class="feed-item danger">
+                    <div class="feed-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div class="feed-content">
+                      <h4>New Phishing Drainer Active</h4>
+                      <p>Fake token swap contracts detected mimicking Uniswap v4 on Ethereum. Score: 98/100.</p>
+                      <span>10 minutes ago</span>
+                    </div>
+                  </div>
+                  <div class="feed-item warning">
+                    <div class="feed-icon"><i class="fa-solid fa-circle-info"></i></div>
+                    <div class="feed-content">
+                      <h4>Solana Congestion Alert</h4>
+                      <p>RPC latency elevated by 24%. Recommend standard priority fee adjustments.</p>
+                      <span>1 hour ago</span>
+                    </div>
+                  </div>
+                  <div class="feed-item success">
+                    <div class="feed-icon"><i class="fa-solid fa-circle-check"></i></div>
+                    <div class="feed-content">
+                      <h4>Gas Optimizer Rebalanced</h4>
+                      <p>Priority rates successfully adjusted to match lower block congestion averages.</p>
+                      <span>3 hours ago</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SCANNER TAB -->
+        <section id="tab-scanner" class="tab-view">
+          <div class="card glass">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Scam & Stuck Transaction Diagnosis</h3>
+            </div>
+            <div class="card-body">
+              <p class="subtitle">Assigns risk scores, identifies stuck stages in plain English, and outlines recommended actions.</p>
+              
+              <div class="form-container">
+                <div class="form-group flex-row">
+                  <div class="flex-input">
+                    <label for="scan-hash-input">Transaction Hash</label>
+                    <input type="text" id="scan-hash-input" placeholder="e.g. 0xstuck, 0xsafe, 0xscam or random hash...">
+                  </div>
+                  <div class="flex-select">
+                    <label for="scan-chain-select">Blockchain</label>
+                    <select id="scan-chain-select" class="theme-select">
+                      <option value="ethereum">Ethereum</option>
+                      <option value="solana">Solana</option>
+                      <option value="bsc">BNB Chain</option>
+                      <option value="polygon">Polygon</option>
+                    </select>
+                  </div>
+                  <button id="scan-submit-btn" class="glow-button"><i class="fa-solid fa-shield-halved"></i> Run Diagnosis</button>
+                </div>
+                <div class="demo-chips">
+                  <span>Try Demo:</span>
+                  <button class="chip-btn" data-input="0xscam" data-tab="scanner">🔴 Phishing Tx</button>
+                  <button class="chip-btn" data-input="0xstuck" data-tab="scanner">🟡 Stuck Gas Tx</button>
+                  <button class="chip-btn" data-input="0xsafe" data-tab="scanner">🟢 Safe Tx</button>
+                </div>
+              </div>
+
+              <!-- Loading State -->
+              <div id="scan-loader" class="view-loader hidden">
+                <i class="fa-solid fa-shield-halved fa-spin loading-logo"></i>
+                <h4>GuardX Shield Diagnostics Running...</h4>
+                <p>Analyzing node RPC state, security signatures, and priority fees.</p>
+              </div>
+
+              <!-- Result View -->
+              <div id="scan-result" class="result-details hidden">
+                
+                <!-- Main Header info -->
+                <div class="result-summary-grid">
+                  <div class="result-card verdict-block" id="verdict-card">
+                    <span class="badge" id="scan-verdict-badge">SAFE</span>
+                    <h2 id="scan-verdict-title">Transaction Safe</h2>
+                    <p id="scan-verdict-desc">We did not find any security anomalies.</p>
+                  </div>
+                  
+                  <div class="result-card score-block">
+                    <h4>Risk Assessment Score</h4>
+                    <div class="score-circle">
+                      <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle" id="risk-score-circle" stroke-dasharray="12, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <text x="18" y="20.35" class="percentage" id="risk-score-text">12</text>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div class="result-card meta-block">
+                    <div class="meta-row">
+                      <span class="lbl">Confirmation:</span>
+                      <span class="val" id="scan-meta-est">~45 seconds</span>
+                    </div>
+                    <div class="meta-row">
+                      <span class="lbl">Current Stage:</span>
+                      <span class="val" id="scan-meta-stage">Stage 5 (Bridge Relay)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 5-Stage stuck analysis timeline -->
+                <div class="timeline-container">
+                  <h4>Transaction Flow Diagnostics</h4>
+                  <div class="flow-timeline">
+                    <div class="timeline-step" id="step-1">
+                      <div class="step-dot">1</div>
+                      <div class="step-label">Submitted</div>
+                    </div>
+                    <div class="timeline-connector"></div>
+                    <div class="timeline-step" id="step-2">
+                      <div class="step-dot">2</div>
+                      <div class="step-label">Mempool</div>
+                    </div>
+                    <div class="timeline-connector"></div>
+                    <div class="timeline-step" id="step-3">
+                      <div class="step-dot">3</div>
+                      <div class="step-label">Gas Est.</div>
+                    </div>
+                    <div class="timeline-connector"></div>
+                    <div class="timeline-step" id="step-4">
+                      <div class="step-dot">4</div>
+                      <div class="step-label">Execution</div>
+                    </div>
+                    <div class="timeline-connector"></div>
+                    <div class="timeline-step" id="step-5">
+                      <div class="step-dot">5</div>
+                      <div class="step-label">Relay</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- AI narrative analysis & Flags -->
+                <div class="analysis-details-grid">
+                  <div class="analysis-card bg-glass">
+                    <h4>💬 AI Security Narrative</h4>
+                    <p class="narrative-text" id="scan-narrative">Uniswap transaction parameters match safe profiles.</p>
+                  </div>
+                  <div class="analysis-card bg-glass">
+                    <h4>⚠️ Security Flag Report</h4>
+                    <ul class="flags-list" id="scan-flags-list">
+                      <li>✅ No security flags triggered.</li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- AUDITOR TAB -->
+        <section id="tab-auditor" class="tab-view">
+          <div class="card glass">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-file-shield"></i> Smart Contract Audit</h3>
+            </div>
+            <div class="card-body">
+              <p class="subtitle">Scans target contract bytecode and verified explorer structures for hidden vulnerabilities.</p>
+              
+              <div class="form-container">
+                <div class="form-group flex-row">
+                  <div class="flex-input">
+                    <label for="audit-address-input">Smart Contract Address</label>
+                    <input type="text" id="audit-address-input" placeholder="e.g. 0xdangerous, 0xtrusted, or contract address...">
+                  </div>
+                  <button id="audit-submit-btn" class="glow-button"><i class="fa-solid fa-bug-slash"></i> Audit Code</button>
+                </div>
+                <div class="demo-chips">
+                  <span>Try Demo:</span>
+                  <button class="chip-btn" data-input="0xdangerous" data-tab="auditor">🔴 honeypot/unverified</button>
+                  <button class="chip-btn" data-input="0xtrusted" data-tab="auditor">🟢 Verified Token Contract</button>
+                </div>
+              </div>
+
+              <!-- Loading State -->
+              <div id="audit-loader" class="view-loader hidden">
+                <i class="fa-solid fa-microchip fa-spin loading-logo"></i>
+                <h4>Auditing Contract Bytecode...</h4>
+                <p>Checking Etherscan code registration, owner controls, and potential backdoors.</p>
+              </div>
+
+              <!-- Result details -->
+              <div id="audit-result" class="result-details hidden">
+                <div class="audit-outcome-grid">
+                  <div class="audit-card-verdict" id="audit-trust-card">
+                    <i class="fa-solid fa-shield-virus trust-icon" id="audit-trust-icon"></i>
+                    <h2 id="audit-trust-title">Dangerous Contract</h2>
+                    <p id="audit-verified-badge">Code Verification: Unverified</p>
+                  </div>
+                  
+                  <div class="audit-details-panel">
+                    <h4>Vulnerabilities Scan Report</h4>
+                    <div class="audit-notes" id="audit-notes">
+                      WARNING: Owner holds excessive access rights to selfdestruct.
+                    </div>
+                    
+                    <h5 class="findings-header">Dangerous Functions Detected:</h5>
+                    <ul class="danger-funcs-list" id="audit-funcs-list">
+                      <li>selfdestruct()</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- GAS OPTIMIZER TAB -->
+        <section id="tab-gas" class="tab-view">
+          <div class="card glass">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-gas-pump"></i> Gas Optimizer Engine</h3>
+              <div class="header-controls">
+                <span class="refresh-badge" id="gas-tab-refresh-label">Updates in 30s</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="subtitle">Analyzes mempool traffic density to compute optimal transaction pricing tiers.</p>
+              
+              <div class="gas-selector-bar">
+                <span>Select Target Network:</span>
+                <div class="radio-group">
+                  <input type="radio" id="gas-radio-eth" name="gas-chain-radio" value="ethereum" checked>
+                  <label for="gas-radio-eth">Ethereum</label>
+                  
+                  <input type="radio" id="gas-radio-sol" name="gas-chain-radio" value="solana">
+                  <label for="gas-radio-sol">Solana</label>
+                  
+                  <input type="radio" id="gas-radio-bsc" name="gas-chain-radio" value="bsc">
+                  <label for="gas-radio-bsc">BNB Chain</label>
+                  
+                  <input type="radio" id="gas-radio-poly" name="gas-chain-radio" value="polygon">
+                  <label for="gas-radio-poly">Polygon</label>
+                </div>
+              </div>
+
+              <div class="gas-cards-container" id="gas-details-grid">
+                <!-- Gas optimizer cards will render dynamically -->
+              </div>
+
+              <!-- Gas calculation flow -->
+              <div class="gas-calc-info">
+                <h4><i class="fa-solid fa-brain"></i> Optimizer Calculation Logic</h4>
+                <div class="calc-steps-grid">
+                  <div class="calc-step-item">
+                    <h5>1. Block Base Fee</h5>
+                    <p>Polls network RPC nodes directly for the minimum required fee parameter in the upcoming block header.</p>
+                  </div>
+                  <div class="calc-step-item">
+                    <h5>2. Priority Fee Profile</h5>
+                    <p>Analyzes the distribution of tip margins paid across the last 10 mined blocks to establish current demand.</p>
+                  </div>
+                  <div class="calc-step-item">
+                    <h5>3. Urgency Calibration</h5>
+                    <p>Applies standard multiplier metrics to generate 3 clearance speeds (Slow / Standard / Fast).</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ALERTS TAB -->
+        <section id="tab-alerts" class="tab-view">
+          <div class="card glass">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-bell"></i> Real-time Security Subscriptions</h3>
+            </div>
+            <div class="card-body">
+              <p class="subtitle">Subscribe transaction hashes or wallets. Receive automated reports on confirmation or threat flags.</p>
+              
+              <div class="alert-form-split">
+                
+                <!-- Alert config form -->
+                <div class="alert-form-panel">
+                  <h4>Configure Alert Rule</h4>
+                  <div class="form-group">
+                    <label for="alert-target">Target Hash or Wallet Address</label>
+                    <input type="text" id="alert-target" placeholder="e.g. 0xstuck or 0x...">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>Select Notification Channels</label>
+                    <div class="checkbox-group">
+                      <label class="check-container">
+                        <input type="checkbox" id="channel-email" checked>
+                        <span class="checkmark"></span>
+                        <i class="fa-solid fa-envelope"></i> Email Notification
+                      </label>
+                      <label class="check-container">
+                        <input type="checkbox" id="channel-telegram">
+                        <span class="checkmark"></span>
+                        <i class="fa-solid fa-paper-plane"></i> Telegram Bot Alert
+                      </label>
+                      <label class="check-container">
+                        <input type="checkbox" id="channel-browser">
+                        <span class="checkmark"></span>
+                        <i class="fa-solid fa-desktop"></i> Browser Push Notify
+                      </label>
+                    </div>
+                  </div>
+
+                  <button id="alert-submit-btn" class="glow-button"><i class="fa-solid fa-bell-plus"></i> Subscribe Watcher</button>
+                </div>
+
+                <!-- Subscriptions state list -->
+                <div class="alert-list-panel">
+                  <h4>Active Security Watchers</h4>
+                  <div class="active-subs-list" id="active-subs-container">
+                    <p class="empty-list">No active transaction watchers. Configure a target to start monitoring.</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CHATBOT TAB -->
+        <section id="tab-chatbot" class="tab-view">
+          <div class="card glass chat-card">
+            <div class="card-header chat-header">
+              <div class="agent-avatar">
+                <i class="fa-solid fa-user-astronaut"></i>
+              </div>
+              <div class="agent-name-wrap">
+                <h3>GuardX Shield Agent</h3>
+                <span>Security Intelligence Co-pilot</span>
+              </div>
+            </div>
+            
+            <!-- Message thread container -->
+            <div class="chat-thread" id="chat-thread-container">
+              <div class="chat-message agent">
+                <div class="msg-bubble">
+                  👋 <strong>Hello! I am GuardX Shield, your cybersecurity AI assistant.</strong><br><br>
+                  I'm here to help you audit smart contracts, check stuck transactions, and monitor live gas prices. Try typing:<br>
+                  • <em>"Is transaction 0xscam safe?"</em><br>
+                  • <em>"Audit contract 0xdangerous"</em><br>
+                  • <em>"Ethereum gas fee"</em>
+                </div>
+              </div>
+            </div>
+
+            <!-- Predefined commands input -->
+            <div class="chat-shortcuts">
+              <button class="shortcut-btn" data-cmd="Is 0xstuck transaction stuck?">Check 0xstuck</button>
+              <button class="shortcut-btn" data-cmd="Audit contract 0xdangerous">Audit 0xdangerous</button>
+              <button class="shortcut-btn" data-cmd="Show Ethereum gas rates">Show Gas Rates</button>
+            </div>
+
+            <!-- Typing Bar -->
+            <div class="chat-input-bar">
+              <input type="text" id="chat-input" placeholder="Ask GuardX Agent anything about transaction safety, gas, or addresses...">
+              <button id="chat-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
