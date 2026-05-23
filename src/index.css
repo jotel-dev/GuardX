@@ -26,6 +26,22 @@
   --font-mono: 'Space Grotesk', sans-serif;
 }
 
+.light-mode {
+  --navy: #f8fafc;
+  --navy-light: #eef2f8;
+  --navy-dark: #f1f5f9;
+  --teal: #0f766e;
+  --mint: #10b981;
+  --white: #0f172a;
+  --offwhite: #475569;
+  --gray: #64748b;
+  --lightbg: #ffffff;
+  --border: rgba(15, 23, 42, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --shadow: 0 8px 32px rgba(15, 23, 42, 0.08);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -221,6 +237,30 @@ body {
   display: flex;
   align-items: center;
   gap: 24px;
+}
+
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-1px);
+}
+
+.light-mode .theme-toggle-btn {
+  background: rgba(15, 23, 42, 0.08);
+  color: var(--white);
 }
 
 .status-indicator {

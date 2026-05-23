@@ -34,6 +34,7 @@ function App() {
   const [alertSubs, setAlertSubs] = useState([]);
   const [scanState, setScanState] = useState({ loading: false, result: null });
   const [auditState, setAuditState] = useState({ loading: false, result: null });
+  const [theme, setTheme] = useState(() => localStorage.getItem('guardx-theme') || 'dark');
   const [chatMessages, setChatMessages] = useState(initialChat);
 
   useEffect(() => {
@@ -60,6 +61,15 @@ function App() {
   }, [activeTab, activeChain]);
 
   const header = useMemo(() => tabHeaders[activeTab] || tabHeaders.dashboard, [activeTab]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('light-mode', theme === 'light');
+    localStorage.setItem('guardx-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
+  };
 
   const fetchDashboardGas = async (chain) => {
     try {
@@ -186,7 +196,7 @@ function App() {
         onChangeChain={setActiveChain}
       />
       <main className="main-content">
-        <Header title={header.title} description={header.desc} />
+        <Header title={header.title} description={header.desc} theme={theme} onToggleTheme={toggleTheme} />
         <div className="view-viewport">
           <Dashboard
             isActive={activeTab === 'dashboard'}
